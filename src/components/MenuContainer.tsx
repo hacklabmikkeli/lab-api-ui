@@ -1,17 +1,36 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
+import strings from "../localization/strings";
+import { KeycloakInstance } from "keycloak-js";
 import {
   Container,
   Image,
-  Menu
+  Menu,
+  Dropdown
 } from "semantic-ui-react"
-import { Link } from 'react-router-dom';
 
 export interface Props {
   siteName: string,
-  siteLogo: string
+  siteLogo: string,
+  authenticated: boolean,
+  keycloak?: KeycloakInstance | null,
+  onLogout?: () => void
 }
 
 class MenuContainer extends React.Component<Props, object> {
+
+  onAccountItemClick = () =>  {
+    if (this.props.keycloak) {
+      window.location.href = this.props.keycloak.createAccountUrl();
+    }
+  }
+
+  onLogoutItemClick = () => {
+    if (this.props.keycloak) {
+      this.props.keycloak.logout();
+    }
+    this.props.onLogout && this.props.onLogout();
+  }
 
   render() {
     return (
@@ -23,6 +42,16 @@ class MenuContainer extends React.Component<Props, object> {
               <span>{this.props.siteName}</span>
             </Link>
           </Menu.Item>
+          { this.props.authenticated &&
+            <Menu.Menu position="right">
+              <Dropdown  item simple text={strings.menuBarUserItemText}>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={this.onAccountItemClick}>{strings.menuBarManageAccountText}</Dropdown.Item>
+                  <Dropdown.Item onClick={this.onLogoutItemClick}>{strings.menuBarLogoutText}</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu.Menu>
+          }
         </Container>
       </Menu>
     );

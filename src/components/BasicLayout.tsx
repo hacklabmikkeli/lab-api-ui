@@ -4,7 +4,7 @@ import 'semantic-ui-css/semantic.min.css';
 
 import { Container } from "semantic-ui-react";
 import AlienLogo from "../gfx/alien_pink.svg";
-import MenuContainer from "./MenuContainer";
+import MenuContainer from "../containers/MenuContainer";
 import FooterContainer from "./FooterContainer";
 
 class BasicLayout extends React.Component {

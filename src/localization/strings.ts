@@ -3,6 +3,9 @@ import LocalizedStrings, {
 } from 'localized-strings';
 
 export interface IStrings extends LocalizedStringsMethods {
+  menuBarUserItemText: string,
+  menuBarManageAccountText: string,
+  menuBarLogoutText: string,
   welcomeTitle: string,
   welcomeDescriptionText: string,
   welcomeRegisterButtonText: string,
